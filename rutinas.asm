@@ -29,6 +29,7 @@ contar_caracteres:
     ret
 
 ;FUNCION 2
+;Validar movimiento
 ; Parametros:
 ;   rdi = direccion inicial del mapa
 ;   rsi = numero de columnas del mapa
@@ -49,4 +50,27 @@ validar_movimiento:
 
 .bloqueado:
     xor rax, rax    ;retorna 0
+    ret
+
+
+;FUNCION 3
+;Calcular puntaje
+; Parametros:
+;   rdi = monedas recolectadas
+;   rsi = pasos realizados
+;   rdx = niveles completados
+;   en rax guardamos resultado
+
+obtener_puntaje:
+;formula puntaje =(monedas * 100) - (pasos*2) + (niveles * 500)
+    mov rax, rdi
+    imul rax, 100
+
+    mov r9, rsi
+    imul r9, 2
+    sub rax, r9
+
+    mov r9, rdx
+    imul r9, 500
+    add rax, r9
     ret
