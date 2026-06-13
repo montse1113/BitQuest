@@ -99,3 +99,33 @@ detectar_objeto:
 .encontrado:
     mov rax, 1
     ret
+
+;FUNCION 5
+;Contar celdas libres
+; Parametros:
+;   rdi = la direccion inicial del mapa
+;   rdi = numeor total de celdas
+
+contar_celdas:
+    xor rax,rax
+    xor rcx, rcx    ;posicion donde se encuentra
+
+.loop_cl:
+    cmp rcx, rsi
+    jge .fin_cl
+
+    movzx r9, byte [rdi + rcx]
+    cmp r9, '.'         ;verifica si es celda libre 
+    jne .siguiente_cl
+
+    inc rax     ;incrementa el contador
+
+.siguiente_cl:
+    inc rcx
+    jmp .loop_cl
+
+.fin_cl:
+    ret
+
+
+
