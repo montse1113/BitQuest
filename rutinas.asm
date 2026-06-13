@@ -74,3 +74,28 @@ obtener_puntaje:
     imul r9, 500
     add rax, r9
     ret
+
+;FUNCION 4
+;Detectar objeto de una celda
+; Parametros:
+;   rdi = direccion inicial del mapa
+;   rsi = numero de columnas del mapa
+;   rdx = fila que se desea revisar
+;   rcx = columna que se desea revisar
+;   r8 = caracter del objeto que se desea buscar
+
+detectar_objeto:
+    imul rdx, rsi
+    add rdx, rcx
+
+    movzx rax, byte[rdi + rdx]
+
+    cmp rax, r8
+    je .encontrado
+
+    xor rax, rax
+    ret
+
+.encontrado:
+    mov rax, 1
+    ret
