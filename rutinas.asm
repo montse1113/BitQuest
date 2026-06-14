@@ -1,3 +1,13 @@
+bits 64
+section .text
+
+global contar_caracteres
+global validar_movimiento
+global obtener_puntaje
+global detectar_objeto
+global contar_celdas
+
+
 ;FUNCION 1: CONTAR CARACTERES
 ; Parametros:
 ; Se ejecuta en linux
@@ -104,7 +114,7 @@ detectar_objeto:
 ;Contar celdas libres
 ; Parametros:
 ;   rdi = la direccion inicial del mapa
-;   rdi = numeor total de celdas
+;   rsi = numero total de celdas
 
 contar_celdas:
     xor rax,rax
