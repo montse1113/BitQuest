@@ -10,7 +10,9 @@ char leer_tecla(){
     struct termios viejo, nuevo;
     tcgetattr(STDIN_FILENO, &viejo); //se guarda cconfiguracion actual
     nuevo=viejo;
-    nuevo.c_lflag &= ~(ICANON | ECHO);
+    nuevo.c_lflag &= ~(ICANON | ECHO | ECHOE | ECHOK | ECHONL);
+    nuevo.c_cc[VMIN] = 1;
+    nuevo.c_cc[VTIME] = 0;
     tcsetattr(STDIN_FILENO, TCSANOW, &nuevo);   //se desactiva el buffer y el eco
     char c=getchar();
     tcsetattr(STDIN_FILENO, TCSANOW, &viejo);   //se restaura config
@@ -59,7 +61,7 @@ int jugar_nivel(char mapa[FILAS][COLUMNAS], Nivel *n, int *pasos_acum, int *mone
         char tecla = leer_tecla();
 
         if(tecla == 'q' || tecla == 'Q'){
-            printf("\nSalistye del juego!\n");
+            printf("\nSaliste del juego!\n");
             exit(0);
         }
 
@@ -71,7 +73,7 @@ int jugar_nivel(char mapa[FILAS][COLUMNAS], Nivel *n, int *pasos_acum, int *mone
         if(tecla == 'd' || tecla == 'D') nc++;
 
         if(nf>0 && nf<FILAS && nc >= 0 && nc<COLUMNAS){
-            if(detectar_objeto(&mapa[0][0], COLUMNAS, nf, nc, SALIDA)){
+            if(detectar_objeto(&mapa[0][0], COLS_MAPA, nf, nc, SALIDA)){
                 j.fila = nf;
                 j.col = nc;
                 break; //nivel completado
@@ -133,7 +135,7 @@ int main(){
 
 
     //funcion 3 nasm puntaje total
-    long puntaje = obtener_puntaje(monedas_total, pasos_total, 3);
+    int puntaje = obtener_puntaje(monedas_total, pasos_total, 3);
 
     //resumen final
     resumen_final(monedas_total, monedas_posibles, pasos_total, puntaje);

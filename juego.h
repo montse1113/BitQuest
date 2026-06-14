@@ -3,7 +3,8 @@
 
 // ─── Tamaño del mapa y ventana visible ───────────────────────────────────────
 #define FILAS        60
-#define COLUMNAS     60
+#define COLUMNAS     61 //ancho del array
+#define COLS_MAPA    61//ancho logico del mapa para nasm
 #define VISTA_FILAS  20
 #define VISTA_COLS   20
 
@@ -13,7 +14,7 @@
 #define JUGADOR      'P'
 #define MONEDA       'M'
 #define LLAVE        'K'
-#define PUERTA       'D'
+#define PUERTA       'T'
 #define SALIDA       'E'
 
 // ─── Struct del jugador ───────────────────────────────────────────────────────
@@ -42,7 +43,7 @@ void resumen_final(int monedas_total, int monedas_posibles, int pasos_total, int
 // ─── Prototipos de funciones en NASM (rutinas.asm) ───────────────────────────
 int  contar_caracteres(char *mapa, int total_celdas, char caracter);
 int  validar_movimiento(char *mapa, int columnas, int nueva_fila, int nueva_col);
-long obtener_puntaje(int monedas, int pasos, int niveles);
+int obtener_puntaje(int monedas, int pasos, int niveles);
 int  detectar_objeto(char *mapa, int columnas, int fila, int col, char objeto);
 int  contar_celdas(char *mapa, int total_celdas);//cuenta celdas libres
 
