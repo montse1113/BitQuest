@@ -52,7 +52,7 @@ int jugar_nivel(char mapa[FILAS][COLUMNAS], Nivel *n, int *pasos_acum, int *mone
 
     //bucle principal del nivel
     while(1){
-        system("clear");
+        system("clear");    //se limpia pantalla
         imprimir_ventana(mapa, &j);
         mostrar_hud(&j, n);
 
@@ -63,6 +63,80 @@ int jugar_nivel(char mapa[FILAS][COLUMNAS], Nivel *n, int *pasos_acum, int *mone
             exit(0);
         }
 
+        //funcion 4 nasm se detecta si el jugador llego a la salida
+        int nf= j.fila, nc = j.col;
+        if(tecla == 'w' || tecla == 'W') nf--;
+        if(tecla == 's' || tecla == 'S') nf++;
+        if(tecla == 'a' || tecla == 'A') nc--;
+        if(tecla == 'd' || tecla == 'D') nc++;
 
+        if(nf>0 && nf<FILAS && nc >= 0 && nc<COLUMNAS){
+            if(detectar_objeto(&mapa[0][0], COLUMNAS, nf, nc, SALIDA)){
+                j.fila = nf;
+                j.col = nc;
+                break; //nivel completado
+            }
+        }
+        mover_jugador(mapa, &j, tecla, n);
     }
+   
+    //se acumulan pasos y monedas para el resumen final 
+    *pasos_acum += j.pasos;
+    *monedas_acum += j.monedas;
+
+    resumen_nivel(&j, n);
+    printf("  Presiona cualquier tecla para continuar...\n");
+    leer_tecla();
+
+    return j.monedas;
+}
+
+
+//main
+int main(){
+    system("clear");
+
+
+    //pantalla de titulo
+    printf("=========================================\n");
+    printf("   BITQUEST: Explorador de Matrices\n");
+    printf("=========================================\n");
+    printf("  W/A/S/D  Mover jugador\n");
+    printf("  Q        Salir\n");
+    printf("  M        Moneda\n");
+    printf("  K        Llave\n");
+    printf("  D        Puerta (necesitas llave)\n");
+    printf("  E        Salida del nivel\n");
+    printf("=========================================\n");
+    printf("  Presiona cualquier tecla para iniciar...\n");
+    leer_tecla();
+
+    //variables para el resumen final
+    int pasos_total=0;
+    int monedas_total=0;
+    int monedas_posibles=0;
+
+    //nivel 1
+    Nivel n1={1,0,0};
+    jugar_nivel(mapa_nivel1, &n1, &pasos_total, &monedas_total);
+    monedas_posibles += n1.total_monedas;
+
+    //nivel 2
+    Nivel n2={2,0,0};
+    jugar_nivel(mapa_nivel2, &n2, &pasos_total, &monedas_total);
+    monedas_posibles += n2.total_monedas;
+
+    //nivel 3
+    Nivel n3= {3,0,0};
+    jugar_nivel(mapa_nivel3, &n3, &pasos_total, &monedas_total);
+    monedas_posibles += n3.total_monedas;
+
+
+    //funcion 3 nasm puntaje total
+    long puntaje = obtener_puntaje(monedas_total, pasos_total, 3);
+
+    //resumen final
+    resumen_final(monedas_total, monedas_posibles, pasos_total, puntaje);
+
+    return 0;
 }
