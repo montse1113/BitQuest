@@ -40,10 +40,10 @@ void resumen_nivel(Jugador *j, Nivel *n);
 void resumen_final(int monedas_total, int monedas_posibles, int pasos_total, int puntaje);
 
 // ─── Prototipos de funciones en NASM (rutinas.asm) ───────────────────────────
-int  contar_caracter(char *mapa, int total_celdas, char caracter);
+int  contar_caracteres(char *mapa, int total_celdas, char caracter);
 int  validar_movimiento(char *mapa, int columnas, int nueva_fila, int nueva_col);
-long calcular_puntaje(int monedas, int pasos, int niveles);
+long obtener_puntaje(int monedas, int pasos, int niveles);
 int  detectar_objeto(char *mapa, int columnas, int fila, int col, char objeto);
-int  contar_celdas_libres(char *mapa, int total_celdas);
+int  contar_celdas(char *mapa, int total_celdas);//cuenta celdas libres
 
 #endif
