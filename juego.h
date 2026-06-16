@@ -7,6 +7,7 @@
 #define COLS_MAPA    61//ancho logico del mapa para nasm
 #define VISTA_FILAS  20
 #define VISTA_COLS   20
+#define ANCHO_MAPA   60
 
 // ─── Caracteres del mapa ─────────────────────────────────────────────────────
 #define PARED        '#'

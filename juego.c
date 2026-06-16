@@ -15,7 +15,7 @@ void imprimir_ventana(char mapa[FILAS][COLUMNAS], Jugador *j){
 
     //si la ventana se sale por abajo o derecha lo ajustamos al borde
     if(inicio_fila>FILAS-VISTA_FILAS) inicio_fila = FILAS - VISTA_FILAS;
-    if(inicio_col > COLS_MAPA-VISTA_COLS) inicio_col= COLS_MAPA - VISTA_COLS;
+    if(inicio_col > ANCHO_MAPA-VISTA_COLS) inicio_col= ANCHO_MAPA - VISTA_COLS;
 
 
     //se imprime las 20 filas y las 20 columnas visibles
@@ -62,15 +62,15 @@ void mover_jugador(char mapa[FILAS][COLUMNAS], Jugador *j, char tecla, Nivel *n)
 
     //se verififca que no se salga del map
     if(nueva_fila < 0 || nueva_fila >= FILAS) return;
-    if(nueva_col < 0 || nueva_col >= COLS_MAPA) return;
+    if(nueva_col < 0 || nueva_col >= ANCHO_MAPA) return;
 
     //funcion 2 nasm: validar_movimiento devuelve 1 si no es pared
-    if(!validar_movimiento(&mapa[0][0], COLS_MAPA, nueva_fila, nueva_col)){
+    if(!validar_movimiento(&mapa[0][0], COLUMNAS, nueva_fila, nueva_col)){
         return;
     }
 
     //funcion 4 nasm: detecta si hay puerta y el jugador no tiene lalve
-    if(detectar_objeto(&mapa[0][0], COLS_MAPA, nueva_fila, nueva_col, PUERTA)){
+    if(detectar_objeto(&mapa[0][0], COLUMNAS, nueva_fila, nueva_col, PUERTA)){
         if(!j->tiene_llave){
             printf("Necesitas la llave para abrir la puerta!\n");
             return;
@@ -80,13 +80,13 @@ void mover_jugador(char mapa[FILAS][COLUMNAS], Jugador *j, char tecla, Nivel *n)
     }
 
     //funcion 4 nasm: detecta si es moneda
-    if(detectar_objeto(&mapa[0][0], COLS_MAPA, nueva_fila, nueva_col, MONEDA)){
+    if(detectar_objeto(&mapa[0][0], COLUMNAS, nueva_fila, nueva_col, MONEDA)){
         j->monedas++;
         mapa[nueva_fila][nueva_col]=CAMINO;//la moneda desaparece
     }
 
     //funcion 4 nasm detecta llave
-    if(detectar_objeto(&mapa[0][0], COLS_MAPA, nueva_fila, nueva_col, LLAVE)){
+    if(detectar_objeto(&mapa[0][0], COLUMNAS, nueva_fila, nueva_col, LLAVE)){
         j->tiene_llave = 1;
         mapa[nueva_fila][nueva_col]=CAMINO;//la llave desaparece
         printf("Recogiste la llave\n");
