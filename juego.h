@@ -7,6 +7,7 @@
 #define COLS_MAPA    61//ancho logico del mapa para nasm
 #define VISTA_FILAS  20
 #define VISTA_COLS   20
+#define ANCHO_MAPA   60
 
 // ─── Caracteres del mapa ─────────────────────────────────────────────────────
 #define PARED        '#'
@@ -37,7 +38,7 @@ typedef struct {
 void imprimir_ventana(char mapa[FILAS][COLUMNAS], Jugador *j);
 void mover_jugador(char mapa[FILAS][COLUMNAS], Jugador *j, char direccion, Nivel *n);
 void mostrar_hud(Jugador *j, Nivel *n);
-void resumen_nivel(Jugador *j, Nivel *n);
+void resumen_nivel(Jugador *j, Nivel *n, int puntaje_parcial);
 void resumen_final(int monedas_total, int monedas_posibles, int pasos_total, int puntaje);
 
 // ─── Prototipos de funciones en NASM (rutinas.asm) ───────────────────────────
