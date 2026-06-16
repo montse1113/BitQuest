@@ -86,7 +86,8 @@ int jugar_nivel(char mapa[FILAS][COLUMNAS], Nivel *n, int *pasos_acum, int *mone
     *pasos_acum += j.pasos;
     *monedas_acum += j.monedas;
 
-    resumen_nivel(&j, n);
+    int puntaje_parcial= obtener_puntaje(*monedas_acum, *pasos_acum,n->numero);
+    resumen_nivel(&j, n, puntaje_parcial);
     printf("  Presiona cualquier tecla para continuar...\n");
     leer_tecla();
 

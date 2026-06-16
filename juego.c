@@ -98,11 +98,13 @@ void mover_jugador(char mapa[FILAS][COLUMNAS], Jugador *j, char tecla, Nivel *n)
     j->pasos++;
 }
 
-void resumen_nivel(Jugador *j, Nivel *n){
+void resumen_nivel(Jugador *j, Nivel *n, int puntaje_parcial){
     printf("\n=========================================\n");
     printf(" Nivel %d completado!\n", n->numero);
     printf(" Monedas recolectadas : %d / %d\n", j->monedas, n->total_monedas);
     printf(" Pasos realizados     : %d\n", j->pasos);
+    printf(" Celdas libres en mapa: %d\n", n->celdas_libres);
+    printf(" Puntaje acumulado    : %d\n", puntaje_parcial);
     printf("=========================================\n");
 }
 
