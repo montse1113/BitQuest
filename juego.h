@@ -48,4 +48,14 @@ int obtener_puntaje(int monedas, int pasos, int niveles);
 int  detectar_objeto(char *mapa, int columnas, int fila, int col, char objeto);
 int  contar_celdas(char *mapa, int total_celdas);//cuenta celdas libres
 
+// ─── Colores ANSI ─────────────────────────────────────────────────────────────
+#define COLOR_RESET     "\033[0m"
+#define COLOR_PARED     "\033[34m"      // Azul
+#define COLOR_MONEDA    "\033[1;33m"    // Amarillo brillante
+#define COLOR_LLAVE     "\033[1;35m"    // Rosa/Magenta brillante
+#define COLOR_JUGADOR   "\033[1;32m"    // Verde brillante
+#define COLOR_PUERTA    "\033[1;31m"    // Rojo brillante
+#define COLOR_SALIDA    "\033[1;36m"    // Cyan brillante
+#define COLOR_CAMINO    "\033[37m"      // Blanco tenue
+
 #endif

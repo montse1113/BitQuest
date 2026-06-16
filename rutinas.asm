@@ -16,27 +16,27 @@ global contar_celdas
 ;   rdx = caracter que se desea contar
 ;   rax = cantidad de veces que aparece el caracter
 
-
 contar_caracteres:
     xor rax, rax    ; contador = 0
     xor rcx, rcx    ; i = 0
 
 .loop_cc:
-    cmp rcx, rsi
+    cmp rcx, rsi    ; si i >= total celdas ya terminamos
     jge .fin_cc
     
-    movzx r9, byte[rdi + rcx]  ;r9 = mapa[i]
-    cmp r9, rdx
-    jne .siguiente_cc
+    movzx r9, byte[rdi + rcx]  ;r9 = mapa[i], leemos un byte del mapa
+    cmp r9, rdx                ; verificamos si es el caracter que buscamos
+    jne .siguiente_cc          ;no coincide, nos saltamos el inc
 
-    inc rax;
+    inc rax;        ; si coincide, sumamos 1 al contador
 
 .siguiente_cc:
-    inc rcx;
+    inc rcx;        ; i++, siguiente celda
     jmp .loop_cc
 
 .fin_cc:
-    ret
+    ret             ; rax tiene el total
+
 
 ;FUNCION 2
 ;Validar movimiento
@@ -47,15 +47,15 @@ contar_caracteres:
 ;   rcx = nueva columna propuesta para el jugador
 
 validar_movimiento:
-    imul rdx, rsi;
-    add rdx, rcx
+    imul rdx, rsi   ; fila * columnas, para encontrar en que fila estamos en memoria
+    add rdx, rcx    ; + col, indice final = mapa[fila][col]
 
-    movzx rax, byte[rdi +rdx]  ;tomamos el caracter del mapa que esta en la posicion rdx
+    movzx rax, byte[rdi + rdx]  ;tomamos el caracter del mapa que esta en la posicion rdx
 
-    cmp rax, '#'
-    je .bloqueado
+    cmp rax, '#'    ; coincide con el caracter que representa la pared
+    je .bloqueado   ; si es pared no puede pasar
 
-    mov rax, 1
+    mov rax, 1      ; no es pared, movimiento valido
     ret
 
 .bloqueado:
@@ -74,16 +74,17 @@ validar_movimiento:
 obtener_puntaje:
 ;formula puntaje =(monedas * 100) - (pasos*2) + (niveles * 500)
     mov rax, rdi
-    imul rax, 100
+    imul rax, 100   ; monedas * 100
 
     mov r9, rsi
-    imul r9, 2
-    sub rax, r9
+    imul r9, 2      ; pasos * 2
+    sub rax, r9     ; le restamos los pasos al puntaje, mas pasos = menos puntos
 
     mov r9, rdx
-    imul r9, 500
-    add rax, r9
+    imul r9, 500    ; niveles * 500
+    add rax, r9     ; completar niveles da bastantes puntos
     ret
+
 
 ;FUNCION 4
 ;Detectar objeto de una celda
@@ -95,20 +96,21 @@ obtener_puntaje:
 ;   r8 = caracter del objeto que se desea buscar
 
 detectar_objeto:
-    imul rdx, rsi
-    add rdx, rcx
+    imul rdx, rsi   ; misma formula que validar_movimiento
+    add rdx, rcx    ; indice = fila * columnas + col
 
-    movzx rax, byte[rdi + rdx]
+    movzx rax, byte[rdi + rdx]  ; leemos la celda
 
-    cmp rax, r8
-    je .encontrado
+    cmp rax, r8     ; es el objeto que buscamos
+    je .encontrado  ; si coincide retornamos 1
 
-    xor rax, rax
+    xor rax, rax    ; no esta el objeto, retornamos 0
     ret
 
 .encontrado:
-    mov rax, 1
+    mov rax, 1      ; si esta el objeto
     ret
+
 
 ;FUNCION 5
 ;Contar celdas libres
@@ -136,6 +138,3 @@ contar_celdas:
 
 .fin_cl:
     ret
-
-
-

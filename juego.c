@@ -24,11 +24,40 @@ void imprimir_ventana(char mapa[FILAS][COLUMNAS], Jugador *j){
             int fila_real= inicio_fila + f;
             int col_real=inicio_col + c;
 
-            //si la posicion del jugador se imprime p
+            // Determinamos qué carácter mostrar en esta celda
+            char celda;
             if(fila_real == j->fila && col_real == j->col){
-                putchar(JUGADOR);
-            }else{
-                putchar(mapa[fila_real][col_real]);
+                celda = JUGADOR;
+            } else {
+                celda = mapa[fila_real][col_real];
+            }
+
+            // Imprimimos el carácter con su color correspondiente
+            switch(celda){
+                case JUGADOR: 
+                    printf(COLOR_JUGADOR  "P" COLOR_RESET); 
+                    break;
+                case PARED:   
+                    printf(COLOR_PARED    "#" COLOR_RESET); 
+                    break;
+                case MONEDA:  
+                    printf(COLOR_MONEDA   "M" COLOR_RESET); 
+                    break;
+                case LLAVE:   
+                    printf(COLOR_LLAVE    "K" COLOR_RESET); 
+                    break;
+                case PUERTA:  
+                    printf(COLOR_PUERTA   "T" COLOR_RESET); 
+                    break;
+                case SALIDA:  
+                    printf(COLOR_SALIDA   "E" COLOR_RESET);
+                    break;
+                case CAMINO:  
+                    printf(COLOR_CAMINO   "." COLOR_RESET); 
+                    break;
+                default:      
+                    printf("%c", celda);                    
+                    break;
             }
         }
         putchar('\n');
